@@ -6,6 +6,6 @@ const PORT = process.env.PORT || 3000;
 
 const initApp=()=>{
   const app = customExpress();
-  app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+  app.listen(PORT, () => console.log(`Servidor a rodando na porta ${PORT}`));
 }
 initApp();
