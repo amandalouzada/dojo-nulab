@@ -4,7 +4,7 @@ class Conta {
     constructor (){
         this.extrato = [];
     }
-    incluirDepositos (operacao, valor){
+    incluirOperacao (operacao, valor){
         this.extrato.push({
             operacao: operacao, 
             valor: valor,
