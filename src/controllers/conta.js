@@ -1,6 +1,10 @@
+const conta = require("../models/conta");
+
+
 
 module.exports = (app) => {
-  app.get("/conta", (req, res, next) => {
-     res.status(200).json({"ola":"mundo"});
+  app.post("/conta", (req, res, next) => {
+    conta.incluirOperacao(req.body);
+    res.status(200).json(conta); 
   });
 };
