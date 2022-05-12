@@ -8,16 +8,29 @@ class Conta {
     this.extrato = [];
   }
 
+  //   calcularSaldo() {
+  //     let saldo = 0;
+  //     this.extrato.forEach((ext) => {
+  //       if (ext.operacao === "retirada") {
+  //         saldo -= ext.valor;
+  //       } else {
+  //         saldo += ext.valor;
+  //       }
+  //     });
+  //     return saldo;
+  //   }
+
   calcularSaldo() {
-    let saldo = 0;
-    this.extrato.forEach((ext) => {
-      if (ext.operacao === "retirada") {
-        saldo -= ext.valor;
-      } else {
-        saldo += ext.valor;
-      }
-    });
-    return saldo;
+    return this.extrato
+      .map((extrato) => {
+        if (extrato.operacao === "retirada") {
+          return extrato.valor * -1;
+        }
+        return extrato.valor;
+      })
+      .reduce((proximo, corrente) => {
+        return proximo + corrente;
+      }, 0);
   }
 
   validaRetirada(valorRetirada) {}

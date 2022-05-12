@@ -26,6 +26,7 @@ describe("Teste Conta", () => {
     expect(valorSaldo).toBe(80);
   });
   test("Deve retornar o valor do saldo 0", () => {
+    conta.extrato = [];
     const valorSaldo = conta.calcularSaldo();
     expect(valorSaldo).toBe(0);
   });
