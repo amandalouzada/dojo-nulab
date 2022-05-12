@@ -1,3 +1,5 @@
+const soma = require("../utils/soma");
+
 const ENUM_OPERACAO = {
   deposito: "Depósito",
   retirada: "Retirada",
@@ -20,17 +22,17 @@ class Conta {
   //     return saldo;
   //   }
 
+  _retornaValorReal(extrato){
+    if (extrato.operacao === "retirada") {
+      return extrato.valor * -1;
+    }
+    return extrato.valor;
+  }
+
   calcularSaldo() {
     return this.extrato
-      .map((extrato) => {
-        if (extrato.operacao === "retirada") {
-          return extrato.valor * -1;
-        }
-        return extrato.valor;
-      })
-      .reduce((proximo, corrente) => {
-        return proximo + corrente;
-      }, 0);
+      .map(this._retornaValorReal)
+      .reduce(soma, 0);
   }
 
   validaRetirada(valorRetirada) {}
