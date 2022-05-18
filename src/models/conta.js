@@ -1,9 +1,5 @@
 const soma = require("../utils/soma");
-
-const ENUM_OPERACAO = {
-  deposito: "Depósito",
-  retirada: "Retirada",
-};
+const Transacao = require("./transacao");
 
 class Conta {
   constructor() {
@@ -22,35 +18,24 @@ class Conta {
   //     return saldo;
   //   }
 
-  _retornaValorReal(extrato){
-    if (extrato.operacao === "retirada") {
-      return extrato.valor * -1;
-    }
-    return extrato.valor;
-  }
-
   calcularSaldo() {
     return this.extrato
-      .map(this._retornaValorReal)
+      .map((transacao) => {
+        return transacao.retornaValorReal();
+      })
       .reduce(soma, 0);
   }
 
-  validaRetirada(valorRetirada) {}
-
-  _validaOperacao(operacao) {
-    if (ENUM_OPERACAO[operacao]) {
-      return true;
-    }
-    return false;
+  retiradaValida(valorRetirada) {
+    return valorRetirada <= this.calcularSaldo();
   }
 
   incluirOperacao({ operacao, valor }) {
-    if (this._validaOperacao(operacao)) {
-      this.extrato.push({
-        operacao: operacao,
-        valor: valor,
-        data: new Date(),
-      });
+    const transacao = new Transacao({ operacao, valor });
+    if (transacao.validaOperacao(operacao)) {
+      if (operacao === "deposito" || this.retiradaValida(valor)) {
+        this.extrato.push(transacao);
+      }
     }
   }
 }
